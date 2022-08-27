@@ -23,4 +23,19 @@ export default NextAuth({
       },
     }),
   ],
+
+  callbacks: {
+    async jwt({ token, user }) {
+      //从authorize返回的user提取属性，添加到JSON Web  令牌
+      if (user) {
+        token.jwt = user.jwt;
+      }
+      return token;
+    },
+    // 从JSON Web 令牌中提取属性，添加到session
+    async session({ session, token }) {
+      session.jwt = token.jwt;
+      return session;
+    },
+  },
 });
