@@ -32,8 +32,8 @@ export default NextAuth({
       }
       return token;
     },
-    // 从JSON Web 令牌中提取属性，添加到session
     async session({ session, token }) {
+      // 从JSON Web 令牌中提取属性，添加到session
       session.jwt = token.jwt;
       return session;
     },
