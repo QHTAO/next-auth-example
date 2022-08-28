@@ -25,9 +25,10 @@ const Signin: FC<SigninProps> = ({}) => {
   const onSubmit: SubmitHandler<IAuthForms> = async (data) => {
     const res = await signIn("credentials", {
       ...data,
-      redirect: false,
+      // redirect: false,
+      callbackUrl: "/",
     });
-    alert(JSON.stringify(res));
+    // alert(JSON.stringify(res));
   };
 
   return (
