@@ -1,7 +1,13 @@
+import axios from "axios";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+
 export default NextAuth({
   secret: "mysecret",
+  session: {
+    strategy: "jwt",
+    maxAge: 60,
+  },
   providers: [
     CredentialsProvider({
       credentials: {
@@ -12,13 +18,15 @@ export default NextAuth({
         if (credentials == null) return null;
         try {
           const { email, password } = credentials;
-          if (email === "test@test.com" && password === "123456") {
-            return { id: 1, name: "jason", email: email, jwt: "jwt token" };
-          } else {
-            throw Error("用户名或密码错误");
-          }
+          const {
+            data: { user, jwt },
+          } = await axios.post("http://localhost:3000/api/users/auth", {
+            email,
+            password,
+          });
+          return { ...user, jwt };
         } catch (error) {
-          return null;
+          throw Error("用户名或密码错误");
         }
       },
     }),
@@ -38,4 +46,7 @@ export default NextAuth({
       return session;
     },
   },
+
+  // 设置登录页面url，用户没有登入，将重定向到登录页面
+  pages: { signIn: "/signin" },
 });

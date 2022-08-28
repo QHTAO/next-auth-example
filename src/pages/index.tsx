@@ -60,12 +60,12 @@ const Home: NextPage = () => {
                 className="absolute top-0 -left-1/2 w-40 hidden peer-hover:flex hover:flex 
          flex-col bg-white shadow-lg rounded-md"
               >
-                <a
-                  className="px-5 py-3 hover:bg-blue-100 rounded-t-md"
-                  href="#"
-                >
-                  个人
-                </a>
+                <Link href="/me">
+                  <a className="px-5 py-3 hover:bg-blue-100 rounded-t-md">
+                    个人
+                  </a>
+                </Link>
+
                 <a
                   className="px-5 py-3 hover:bg-blue-100 rounded-b-md"
                   href="#"
@@ -82,7 +82,7 @@ const Home: NextPage = () => {
         </div>
       </nav>
 
-      <div className="bg-blue-100 my-8">{JSON.stringify(session)}</div>
+      <div className="bg-blue-100 py-8">{JSON.stringify(session)}</div>
     </main>
   );
 };
